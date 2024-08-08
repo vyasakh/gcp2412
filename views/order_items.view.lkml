@@ -52,6 +52,37 @@ view: order_items {
     sql: ${TABLE}.sale_price ;;
   }
 
+  dimension: level_1 {
+    label: "Level 1"
+    view_label: "Level"
+    sql: ${products.brand};;
+    #order_by_field: dim_subtotal_measure_map.subtotal_index
+    html: @{bold_detailed} ;;
+  }
+
+  dimension_group: yearmonth_dg {
+    label: "Year & Month"
+    view_label: "Dates"
+    type: time
+    datatype: date
+    timeframes: [month, month_name, quarter, year]
+    sql: ${TABLE}.returned_at ;;
+  }
+  dimension: level_2_index {
+    hidden: yes
+    label: "Level 2 Index"
+    view_label: "Level"
+    sql:
+    CASE
+      WHEN ${products.category} = "Pants & Capris" THEN 1
+      WHEN ${products.category} = " Skirts" THEN 2
+      WHEN ${products.category} = "Tops & Tees" THEN 3
+      WHEN ${products.category} = "Accessories" THEN 4
+      WHEN ${products.category} = "Maternity" THEN 5
+    ELSE null
+    END;;
+  }
+
   # A measure is a field that uses a SQL aggregate function. Here are defined sum and average
   # measures for this dimension, but you can also add measures of many different aggregates.
   # Click on the type parameter to see all the options in the Quick Help panel on the right.
