@@ -69,7 +69,7 @@ view: order_items {
     sql: ${TABLE}.returned_at ;;
   }
   dimension: level_2_index {
-    hidden: yes
+    hidden: no
     label: "Level 2 Index"
     view_label: "Level"
     sql:
