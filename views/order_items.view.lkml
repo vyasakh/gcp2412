@@ -56,6 +56,36 @@ view: order_items {
   # measures for this dimension, but you can also add measures of many different aggregates.
   # Click on the type parameter to see all the options in the Quick Help panel on the right.
 
+  parameter: currency_selection {
+    label: "Currency selection"
+    description: "Allows choosing between USD, Local, AED. Use as a dashboard toggle for switching between currencies. Use with the Net Sales (Currency Combined) measure."
+    view_label: "- Parameters"
+    type: string
+    default_value: "USD"
+    allowed_value: {
+      label: "USD"
+      value: "USD"
+    }
+
+    allowed_value: {
+      label: "Local"
+      value: "Local"
+    }
+  }
+  measure: actuals {
+    label: "Actuals MTD"
+    view_label: "Actuals"
+    group_label: "MTD"
+    type: sum
+    sql:
+    {% if currency_selection._parameter_value == "'Local'" %}
+      ${returned_week}
+    {% else %}
+      ${returned_month}
+    {% endif %} ;;
+    value_format: "###,###,\" K\""
+  }
+
   measure: total_sale_price {
     type: sum
     sql: ${sale_price} ;;  }
