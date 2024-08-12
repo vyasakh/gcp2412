@@ -55,7 +55,7 @@ view: orders {
           {% elsif dynamic_date_selector._parameter_value == 'week' %}
           ${created_week}
           {% elsif dynamic_date_selector._parameter_value == 'month' %}
-          (FORMAT_TIMESTAMP('%B \'%y',${created_date}))
+          (DATE_FORMAT(${created_date}, '%b %y'))
           {% elsif dynamic_date_selector._parameter_value == 'year'  %}
           ${created_year}
           {% else %}
