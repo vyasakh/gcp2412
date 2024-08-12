@@ -52,9 +52,70 @@ view: order_items {
     sql: ${TABLE}.sale_price ;;
   }
 
+  dimension: level_1 {
+    label: "Level 1"
+    view_label: "Level"
+    sql: ${products.brand};;
+    #order_by_field: dim_subtotal_measure_map.subtotal_index
+    html: @{bold_detailed} ;;
+  }
+
+  dimension_group: yearmonth_dg {
+    label: "Year & Month"
+    view_label: "Dates"
+    type: time
+    datatype: date
+    timeframes: [month, month_name, quarter, year]
+    sql: ${TABLE}.returned_at ;;
+  }
+  dimension: level_2_index {
+    hidden: no
+    label: "Level 2 Index"
+    view_label: "Level"
+    sql:
+    CASE
+      WHEN ${products.category} = "Pants & Capris" THEN 1
+      WHEN ${products.category} = " Skirts" THEN 2
+      WHEN ${products.category} = "Tops & Tees" THEN 3
+      WHEN ${products.category} = "Accessories" THEN 4
+      WHEN ${products.category} = "Maternity" THEN 5
+    ELSE null
+    END;;
+  }
+
   # A measure is a field that uses a SQL aggregate function. Here are defined sum and average
   # measures for this dimension, but you can also add measures of many different aggregates.
   # Click on the type parameter to see all the options in the Quick Help panel on the right.
+
+  parameter: currency_selection {
+    label: "Currency selection"
+    description: "Allows choosing between USD, Local, AED. Use as a dashboard toggle for switching between currencies. Use with the Net Sales (Currency Combined) measure."
+    view_label: "- Parameters"
+    type: string
+    default_value: "USD"
+    allowed_value: {
+      label: "USD"
+      value: "USD"
+    }
+
+    allowed_value: {
+      label: "Local"
+      value: "Local"
+    }
+  }
+  measure: actuals {
+    label: "Actuals MTD"
+    view_label: "Actuals"
+    group_label: "MTD"
+    type: sum
+    sql:
+    {% if currency_selection._parameter_value == "'Local'" %}
+      ${returned_week}
+    {% else %}
+      ${returned_month}
+    {% endif %} ;;
+    value_format: "###,###,\" K\""
+  }
 
   measure: total_sale_price {
     type: sum
