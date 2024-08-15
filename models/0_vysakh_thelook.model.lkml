@@ -14,7 +14,7 @@ include: "/views/**/*.view.lkml"
 
 # persist_with: 0_vysakh_thelook_default_datagroup
 
-# persist_for: "0 seconds"
+persist_for: "0 seconds"
 
 # Explores allow you to join together different views (database tables) based on the
 # relationships between fields. By joining a view into an Explore, you make those
