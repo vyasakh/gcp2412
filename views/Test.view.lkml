@@ -5,7 +5,7 @@ view: add_a_unique_name_1723701937 {
   derived_table: {
     explore_source: orders {
 
-      dev_filters: [orders.status: "COMPLETE"]
+      dev_filters: [orders.status: "PENDING"]
       filters: [orders.status: "COMPLETE"]
       column: status {}
       column: count {}
