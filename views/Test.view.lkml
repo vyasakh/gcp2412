@@ -5,8 +5,8 @@ view: add_a_unique_name_1723701937 {
   derived_table: {
     explore_source: orders {
 
-      dev_filters: [orders.created_date: "10 years"]
-      filters: [orders.created_date: "15 years",orders.status: "COMPLETE"]
+      dev_filters: [orders.created_year: "2023"]
+      filters: [orders.created_date: "900 days",orders.status: "COMPLETE"]
       column: status {}
       column: count {}
     }
