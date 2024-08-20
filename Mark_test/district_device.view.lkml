@@ -22,8 +22,14 @@ view: district_device {
       value: "year"
 
     }
+
   }
 
+  dimension_group: created {
+    type: time
+    timeframes: [raw, time, date, week, month, quarter, year]
+    sql: ${TABLE}.created_at ;;
+  }
   dimension: test_id {
     primary_key: yes
     type: number
