@@ -106,5 +106,21 @@ view: rm_interval_reads {
     sql: ${TABLE}.sale_price ;;
   }
 
+  measure: total_sale_price {
+    type: sum
+    sql: ${sale_price} ;;  }
+
+  measure: Max_sale_price {
+    type: max
+    sql: ${sale_price} ;;  }
+
+  measure: average_sale_price {
+    type: average
+    sql: ${sale_price} ;;  }
+
+  measure: count {
+    type: count
+    drill_fields: [test_id, orders.id, inventory_items.id]
+  }
 
   }
