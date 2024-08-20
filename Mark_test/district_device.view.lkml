@@ -24,7 +24,7 @@ view: district_device {
     }
   }
 
-  dimension: id {
+  dimension: test_id {
     primary_key: yes
     type: number
     sql: ${TABLE}.id ;;
@@ -48,7 +48,7 @@ view: district_device {
 
   set: detail {
     fields: [
-      id,
+      test_id,
       users.id,
     ]
   }

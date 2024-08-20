@@ -7,7 +7,7 @@ view: residential_device {
     type: date
   }
 
-  dimension: id {
+  dimension: test_id {
     primary_key: yes
     type: number
     sql: ${TABLE}.id ;;

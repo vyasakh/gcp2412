@@ -20,23 +20,46 @@ view: dm_interval_reads {
     sql: ${TABLE}.created_at ;;
   }
 
-  dimension: dynamic_date{
+  parameter: dynamic_date {
+    type: unquoted
+
+    default_value: "day"
+    allowed_value: {
+      label: "By Day"
+      value: "day"
+    }
+    allowed_value: {
+      label: "By Week"
+      value: "week"
+    }
+    allowed_value: {
+      label: "By Month"
+      value: "month"
+    }
+    allowed_value: {
+      label: "By Year"
+      value: "year"
+
+    }
+  }
+
+  dimension: dynamic_date1{
     type: string
     sql:
-          {% if dynamic_date_selector._parameter_value == 'day' %}
+          {% if dynamic_date._parameter_value == 'day' %}
           ${created_date}
-          {% elsif dynamic_date_selector._parameter_value == 'week' %}
+          {% elsif dynamic_date._parameter_value == 'week' %}
           ${created_week}
-          {% elsif dynamic_date_selector._parameter_value == 'month' %}
+          {% elsif dynamic_date._parameter_value == 'month' %}
           (DATE_FORMAT(${created_date}, '%b %y'))
-          {% elsif dynamic_date_selector._parameter_value == 'year'  %}
+          {% elsif dynamic_date._parameter_value == 'year'  %}
           ${created_year}
           {% else %}
           ${created_year}
           {% endif %}
           ;;
   }
-  dimension: id {
+  dimension: test_id {
     primary_key: yes
     type: number
     sql: ${TABLE}.id ;;
