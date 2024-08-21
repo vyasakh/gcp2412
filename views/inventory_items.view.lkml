@@ -35,7 +35,7 @@ view: inventory_items {
   # Dates and timestamps can be represented in Looker using a dimension group of type: time.
   # Looker converts dates and timestamps to the specified timeframes within the dimension group.
 
-  dimension_group: created {
+  dimension_group: start {
     type: time
     timeframes: [raw, time, date, week, month, quarter, year]
     sql: ${TABLE}.created_at ;;
@@ -47,7 +47,7 @@ view: inventory_items {
     sql: ${TABLE}.product_id ;;
   }
 
-  dimension_group: sold {
+  dimension_group: end {
     type: time
     timeframes: [raw, time, date, week, month, quarter, year]
     sql: ${TABLE}.sold_at ;;
