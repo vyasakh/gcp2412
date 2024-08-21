@@ -21,13 +21,107 @@ view: orders {
     timeframes: [raw, time, date, week, month, quarter, year]
     sql: ${TABLE}.created_at;;
   }
-    # Here's what a typical dimension looks like in LookML.
-    # A dimension is a groupable field that can be used to filter query results.
-    # This dimension will be called "Status" in Explore.
+
+  parameter: dynamic_date_selector {
+    type: unquoted
+
+    default_value: "day"
+    allowed_value: {
+      label: "By Day"
+      value: "day"
+    }
+    allowed_value: {
+      label: "By Week"
+      value: "week"
+    }
+    allowed_value: {
+      label: "By Month"
+      value: "month"
+    }
+    allowed_value: {
+      label: "By Year"
+      value: "year"
+
+    }
+  }
+
+  dimension: dynamic_date{
+      label_from_parameter: dynamic_date_selector
+      type: string
+      description: ""
+      sql:
+          {% if dynamic_date_selector._parameter_value == 'day' %}
+          ${created_date}
+          {% elsif dynamic_date_selector._parameter_value == 'week' %}
+          ${created_week}
+          {% elsif dynamic_date_selector._parameter_value == 'month' %}
+          (DATE_FORMAT(${created_date}, '%b %y'))
+          {% elsif dynamic_date_selector._parameter_value == 'year'  %}
+          ${created_year}
+          {% else %}
+          ${created_year}
+          {% endif %}
+          ;;
+
+      group_label: "usage_date"
+      order_by_field: dynamic_date_sort
+    }
+
+
+  dimension: dynamic_date_sort {
+    hidden:  yes
+    type: string
+    sql:
+            {% if dynamic_date_selector._parameter_value == 'day' %}
+            ${created_date}
+            {% elsif dynamic_date_selector._parameter_value == 'week' %}
+            ${created_week}
+            {% elsif dynamic_date_selector._parameter_value == 'month' %}
+            ${created_month}
+            {% elsif dynamic_date_selector._parameter_value == 'year'  %}
+            ${created_year}
+            {% else %}
+            ${created_year}
+            {% endif %}
+            ;;
+    group_label: "usage_date"
+
+  }
 
   dimension: status {
     type: string
     sql: ${TABLE}.status ;;
+  }
+
+  dimension: alerts_dim{
+    label: "Alerts Dimension"
+    # drill_fields: [distributor_site_cd,inv_item_sku_id,secondary_sales_current_no_html,secondary_sales_previous_parameter]
+    sql:
+          {% if alerts_parameter._parameter_value == 'PENDING' %}
+          (${status})
+          {% elsif alerts_parameter._parameter_value == 'COMPLETED' %}
+          (${status})
+          {% else %}
+          (${status})
+          {% endif %};;
+  }
+
+  parameter: alerts_parameter {
+    type: unquoted
+    default_value: "nothing"
+
+    allowed_value: {
+      label: "Pending_check"
+      value: "PENDING"
+    }
+    allowed_value: {
+      label: "Completed_check"
+      value: "COMPLETED"
+    }
+    allowed_value: {
+      label: "Cancelled_check"
+      value: "CANCELLED"
+    }
   }
 
   dimension: user_id {

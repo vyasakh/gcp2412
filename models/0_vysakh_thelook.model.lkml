@@ -7,12 +7,14 @@ include: "/views/**/*.view.lkml"
 # Datagroups define a caching policy for an Explore. To learn more,
 # use the Quick Help panel on the right to see documentation.
 
-datagroup: 0_vysakh_thelook_default_datagroup {
-  # sql_trigger: SELECT MAX(id) FROM etl_log;;
-  max_cache_age: "1 hour"
-}
+# datagroup: 0_vysakh_thelook_default_datagroup {
+#   # sql_trigger: SELECT MAX(id) FROM etl_log;;
+#   max_cache_age: "1 hour"
+# }
 
-persist_with: 0_vysakh_thelook_default_datagroup
+# persist_with: 0_vysakh_thelook_default_datagroup
+
+persist_for: "0 seconds"
 
 # Explores allow you to join together different views (database tables) based on the
 # relationships between fields. By joining a view into an Explore, you make those
@@ -47,13 +49,18 @@ explore: day_of_week {}
 
 explore: dept {}
 
+explore: add_a_unique_name_1723701937 {}
+
 explore: dummy {}
 
 explore: employees {}
 
+
 explore: sql_runner_query {}
 
 explore: sql_runner1 {}
+
+
 
 explore: events {
   join: users {
