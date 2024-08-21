@@ -51,6 +51,10 @@ explore: dummy {}
 
 explore: employees {}
 
+explore: sql_runner_query {}
+
+explore: sql_runner1 {}
+
 explore: events {
   join: users {
     type: left_outer
