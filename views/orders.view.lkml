@@ -19,7 +19,7 @@ view: orders {
   dimension_group: created {
     type: time
     timeframes: [raw, time, date, week, month, quarter, year]
-    sql: ${TABLE}.created_at ;;
+    sql: ${TABLE}.created_at;;
   }
 
   parameter: dynamic_date_selector {
@@ -90,6 +90,7 @@ view: orders {
 
   dimension: status {
     type: string
+
     sql: ${TABLE}.status ;;
   }
 
@@ -131,6 +132,7 @@ view: orders {
   }
   measure: count {
     type: count
+
     drill_fields: [detail*]
   }
 

@@ -55,9 +55,12 @@ explore: dummy {}
 
 explore: employees {}
 
-# explore: sql_runner_query {}
 
-# explore: sql_runner_query11 {}
+explore: sql_runner_query {}
+
+explore: sql_runner1 {}
+
+
 
 explore: events {
   join: users {
@@ -132,6 +135,7 @@ explore: inventory_items {
 explore: map_layer {}
 
 explore: orders {
+  sql_always_having: ${count}>35;;
   join: users {
     type: left_outer
     sql_on: ${orders.user_id} = ${users.id} ;;
