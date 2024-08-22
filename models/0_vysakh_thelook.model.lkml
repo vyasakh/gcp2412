@@ -135,6 +135,7 @@ explore: inventory_items {
 explore: map_layer {}
 
 explore: orders {
+  sql_always_having: ${count}>35;;
   join: users {
     type: left_outer
     sql_on: ${orders.user_id} = ${users.id} ;;

@@ -90,6 +90,7 @@ view: orders {
 
   dimension: status {
     type: string
+
     sql: ${TABLE}.status ;;
   }
 
@@ -131,6 +132,7 @@ view: orders {
   }
   measure: count {
     type: count
+
     drill_fields: [detail*]
   }
 
