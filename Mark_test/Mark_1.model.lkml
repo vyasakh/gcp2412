@@ -4,6 +4,7 @@ include: "/Mark_test/residential_device.view.lkml"
 include: "/Mark_test/rm_interval_reads.view.lkml"
 include: "/Mark_test/orders1.view.lkml"
 include: "/Mark_test/dm_interval_reads.view.lkml"
+include: "/Mark_test/Sweta_test.view.lkml"
 
   explore: district_device {
     join: dm_interval_reads {
