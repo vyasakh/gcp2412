@@ -32,3 +32,5 @@ include: "/Mark_test/Sweta_test.view.lkml"
     }
 
    }
+
+explore: sweta_test {}
