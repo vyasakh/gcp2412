@@ -5,15 +5,15 @@ view: sql_runner1 {
           (DATE(CONVERT_TZ(orders.created_at,'UTC','Asia/Kolkata'))) AS `orders.created_month`,
           order_items.sale_price  AS `order_items.sale_price`,
           orders.status  AS `orders.status`,
-              (DATE(CONVERT_TZ(inventory_items.created_at ,'UTC','Asia/Kolkata'))) AS `inventory_items.start_date`,
-              (DATE(CONVERT_TZ(inventory_items.sold_at ,'UTC','Asia/Kolkata'))) AS `inventory_items.end_date`,
+              (DATE(CONVERT_TZ(inventory_items.created_at ,'UTC','Asia/Kolkata'))) AS `inventory_items.date_start`,
+              (DATE(CONVERT_TZ(inventory_items.sold_at ,'UTC','Asia/Kolkata'))) AS `inventory_items.date_end`,
           COUNT(DISTINCT orders.id ) AS `orders.count`,
           COUNT(DISTINCT products.id ) AS `products.count`
       FROM demo_db.order_items  AS order_items
       LEFT JOIN demo_db.orders  AS orders ON order_items.order_id = orders.id
       LEFT JOIN demo_db.inventory_items  AS inventory_items ON order_items.inventory_item_id = inventory_items.id
       LEFT JOIN demo_db.products  AS products ON inventory_items.product_id = products.id
-      WHERE date({% date_start period %}) and date({% date_end period %})
+      WHERE orders.created_at > date({% date_start  period %}) and date({% date_end period %})
       GROUP BY
           1,
           2,
@@ -50,12 +50,12 @@ view: sql_runner1 {
 
   dimension: inventory_items_start_date {
     type: date
-    sql: ${TABLE}.`inventory_items.start_date` ;;
+    sql: ${TABLE}.`inventory_items.date_start` ;;
   }
 
   dimension: inventory_items_end_date {
     type: date
-    sql: ${TABLE}.`inventory_items.end_date` ;;
+    sql: ${TABLE}.`inventory_items.date_end` ;;
   }
 
   dimension: orders_count {
