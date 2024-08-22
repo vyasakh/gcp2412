@@ -20,7 +20,7 @@ view: dept {
   dimension: dept_name {
     type: string
     sql: ${TABLE}.DeptName ;;
-    #test
+    #testrr
   }
 
   measure: count {
