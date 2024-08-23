@@ -13,7 +13,7 @@ view: sql_runner1 {
       LEFT JOIN demo_db.orders  AS orders ON order_items.order_id = orders.id
       LEFT JOIN demo_db.inventory_items  AS inventory_items ON order_items.inventory_item_id = inventory_items.id
       LEFT JOIN demo_db.products  AS products ON inventory_items.product_id = products.id
-      WHERE orders.created_at > date({% date_start  period %}) and date({% date_end period %})
+      where orders.created_at < date({% date_start  period %}) AND orders.created_at > date({% date_end period %})
       GROUP BY
           1,
           2,
