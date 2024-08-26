@@ -151,4 +151,24 @@ view: order_items {
     type: count_distinct
     #drill_fields: [id, orders.id, inventory_items.id]
   }
+
+  parameter: number_of_results {
+    type: string
+    allowed_value: {
+
+      value: "500"
+    }
+    allowed_value: {
+
+      value: "10000"
+    }
+    allowed_value: {
+
+      value: "0"
+    }
+    default_value: "10000"
+
+  }
+
+
 }
