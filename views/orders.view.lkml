@@ -21,6 +21,40 @@ view: orders {
     timeframes: [raw, time, date, week, month, quarter, year]
     sql: ${TABLE}.created_at ;;
   }
+
+
+
+  parameter: date_granularity {
+    type: unquoted
+    allowed_value: {
+      label: "Break down by Day"
+      value: "day"
+    }
+    allowed_value: {
+      label: "Break down by Month"
+      value: "month"
+    }
+  }
+
+  dimension: date {
+    sql:
+    {% if date_granularity._parameter_value == 'day' %}
+    ${created_date}
+    {% elsif date_granularity._parameter_value == 'month' %}
+    ${created_month}
+    {% else %}
+    ${created_date}
+    {% endif %};;
+    html:
+    {% if date_granularity._parameter_value == 'day' %}
+    <font color="darkgreen">{{ rendered_value }}</font>
+    {% elsif date_granularity._parameter_value == 'month' %}
+    <font color="darkred">{{ rendered_value }}</font>
+    {% else %}
+    <font color="black">{{ rendered_value }}</font>
+    {% endif %};;
+  }
+
     # Here's what a typical dimension looks like in LookML.
     # A dimension is a groupable field that can be used to filter query results.
     # This dimension will be called "Status" in Explore.
@@ -43,18 +77,18 @@ view: orders {
   # ----- Sets of fields for drilling ------
   set: detail {
     fields: [
-	id,
-	users.id,
-	users.first_name,
-	users.last_name,
-	billion_orders.count,
-	fakeorders.count,
-	hundred_million_orders.count,
-	hundred_million_orders_wide.count,
-	order_items.count,
-	order_items_vijaya.count,
-	ten_million_orders.count
-	]
+  id,
+  users.id,
+  users.first_name,
+  users.last_name,
+  billion_orders.count,
+  fakeorders.count,
+  hundred_million_orders.count,
+  hundred_million_orders_wide.count,
+  order_items.count,
+  order_items_vijaya.count,
+  ten_million_orders.count
+  ]
   }
 
 }
