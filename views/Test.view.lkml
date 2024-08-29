@@ -2,6 +2,7 @@
 # include: "0_vysakh_thelook.model.lkml"
 
 view: add_a_unique_name_1723701937 {
+
   derived_table: {
     explore_source: orders {
 

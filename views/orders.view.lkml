@@ -95,11 +95,11 @@ view: orders {
   }
 
   dimension: alerts_dim{
-    label: "Alerts Dimension"
+    label:  "The \"official\" metric"
     # drill_fields: [distributor_site_cd,inv_item_sku_id,secondary_sales_current_no_html,secondary_sales_previous_parameter]
     sql:
-          {% if alerts_parameter._parameter_value == 'PENDING' %}
-          (${status})
+          {% if alerts_parameter._parameter_value == '"PENDING"' %}
+          ("${status}")
           {% elsif alerts_parameter._parameter_value == 'COMPLETED' %}
           (${status})
           {% else %}
