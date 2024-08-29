@@ -143,6 +143,7 @@ view: order_items {
 
   measure: total_sale_price {
     type: sum
+    hidden: yes
     sql: ${sale_price} ;;  }
   measure: average_sale_price {
     type: average
