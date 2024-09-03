@@ -13,6 +13,12 @@ view: order_items {
     type: number
     sql: ${TABLE}.id ;;
   }
+
+  dimension: days_since_registered {
+    type: duration_day
+    sql_start: from_unixtime(${returned_raw}) ;;
+    sql_end: from_unixtime(${orders.created_raw}) ;;
+  }
     # Here's what a typical dimension looks like in LookML.
     # A dimension is a groupable field that can be used to filter query results.
     # This dimension will be called "Inventory Item ID" in Explore.
@@ -125,6 +131,6 @@ view: order_items {
     sql: ${sale_price} ;;  }
   measure: count {
     type: count
-    drill_fields: [id, orders.id, inventory_items.id]
+    drill_fields: [returned_raw,average_sale_price,returned_week, inventory_items.id]
   }
 }

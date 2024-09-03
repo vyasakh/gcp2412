@@ -40,21 +40,36 @@ view: orders {
     drill_fields: [detail*]
   }
 
+  measure: id_count {
+    type: number
+    sql: ${user_id}*10 ;;
+    drill_fields: [detail*]
+  }
+
+  measure: completion_status {
+    type: string
+    sql: case when avg(${id_count}) = 100 THEN 'Completed'
+      when avg(${id_count}) < 100 THEN 'In-Progress'
+      when avg(${id_count}) IS NULL THEN 'Not Started'
+      Else 'Not Started'
+      END;;
+  }
+
   # ----- Sets of fields for drilling ------
   set: detail {
     fields: [
-	id,
-	users.id,
-	users.first_name,
-	users.last_name,
-	billion_orders.count,
-	fakeorders.count,
-	hundred_million_orders.count,
-	hundred_million_orders_wide.count,
-	order_items.count,
-	order_items_vijaya.count,
-	ten_million_orders.count
-	]
+  id,
+  users.id,
+  users.first_name,
+  users.last_name,
+  billion_orders.count,
+  fakeorders.count,
+  hundred_million_orders.count,
+  hundred_million_orders_wide.count,
+  order_items.count,
+  order_items_vijaya.count,
+  ten_million_orders.count
+  ]
   }
 
 }
