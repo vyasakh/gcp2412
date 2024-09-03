@@ -20,7 +20,9 @@ view: dept {
   dimension: dept_name {
     type: string
     sql: ${TABLE}.DeptName ;;
+    #testrr
   }
+
   measure: count {
     type: count
     drill_fields: [dept_id, dept_name, salary.count]

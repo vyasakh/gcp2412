@@ -7,12 +7,14 @@ include: "/views/**/*.view.lkml"
 # Datagroups define a caching policy for an Explore. To learn more,
 # use the Quick Help panel on the right to see documentation.
 
-datagroup: 0_vysakh_thelook_default_datagroup {
-  # sql_trigger: SELECT MAX(id) FROM etl_log;;
-  max_cache_age: "1 hour"
-}
+# datagroup: 0_vysakh_thelook_default_datagroup {
+#   # sql_trigger: SELECT MAX(id) FROM etl_log;;
+#   max_cache_age: "1 hour"
+# }
 
-persist_with: 0_vysakh_thelook_default_datagroup
+# persist_with: 0_vysakh_thelook_default_datagroup
+
+persist_for: "0 seconds"
 
 # Explores allow you to join together different views (database tables) based on the
 # relationships between fields. By joining a view into an Explore, you make those
@@ -47,9 +49,18 @@ explore: day_of_week {}
 
 explore: dept {}
 
+explore: add_a_unique_name_1723701937 {}
+
 explore: dummy {}
 
 explore: employees {}
+
+
+explore: sql_runner_query {}
+
+explore: sql_runner1 {}
+
+
 
 explore: events {
   join: users {
@@ -124,6 +135,7 @@ explore: inventory_items {
 explore: map_layer {}
 
 explore: orders {
+  sql_always_having: ${count}>35;;
   join: users {
     type: left_outer
     sql_on: ${orders.user_id} = ${users.id} ;;
@@ -131,31 +143,31 @@ explore: orders {
   }
 }
 
-explore: order_items {
-  join: orders {
-    type: left_outer
-    sql_on: ${order_items.order_id} = ${orders.id} ;;
-    relationship: many_to_one
-  }
+# explore: order_items {
+#   join: orders {
+#     type: left_outer
+#     sql_on: ${order_items.order_id} = ${orders.id} ;;
+#     relationship: many_to_one
+#   }
 
-  join: inventory_items {
-    type: left_outer
-    sql_on: ${order_items.inventory_item_id} = ${inventory_items.id} ;;
-    relationship: many_to_one
-  }
+#   join: inventory_items {
+#     type: left_outer
+#     sql_on: ${order_items.inventory_item_id} = ${inventory_items.id} ;;
+#     relationship: many_to_one
+#   }
 
-  join: users {
-    type: left_outer
-    sql_on: ${orders.user_id} = ${users.id} ;;
-    relationship: many_to_one
-  }
+#   join: users {
+#     type: left_outer
+#     sql_on: ${orders.user_id} = ${users.id} ;;
+#     relationship: many_to_one
+#   }
 
-  join: products {
-    type: left_outer
-    sql_on: ${inventory_items.product_id} = ${products.id} ;;
-    relationship: many_to_one
-  }
-}
+#   join: products {
+#     type: left_outer
+#     sql_on: ${inventory_items.product_id} = ${products.id} ;;
+#     relationship: many_to_one
+#   }
+# }
 
 explore: order_items_vijaya {
   join: orders {

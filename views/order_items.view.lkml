@@ -53,6 +53,30 @@ view: order_items {
     sql: ${TABLE}.returned_at ;;
   }
 
+
+  # parameter: date_granularity {
+  #   type: unquoted
+  #   allowed_value: {
+  #     label: "Break down by Day"
+  #     value: "day"
+  #   }
+  #   allowed_value: {
+  #     label: "Break down by Month"
+  #     value: "month"
+  #   }
+  # }
+
+  # dimension: date {
+  #   sql:
+  #   {% if date_granularity._parameter_value == 'day' %}
+  #     ${returned_date}}
+  #   {% elsif date_granularity._parameter_value == 'month' %}
+  #     ${returned_date}
+  #   {% else %}
+  #     ${returned_date}
+  #   {% endif %};;
+  # }
+
   dimension: sale_price {
     type: number
     sql: ${TABLE}.sale_price ;;
@@ -132,5 +156,9 @@ view: order_items {
   measure: count {
     type: count
     drill_fields: [returned_raw,average_sale_price,returned_week, inventory_items.id]
+
+
+    #drill_fields: [id, orders.id, inventory_items.id]
+
   }
 }
