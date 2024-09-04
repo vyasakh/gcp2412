@@ -86,18 +86,23 @@ view: users {
     drill_fields: [detail*]
   }
 
+  dimension: korean {
+    type: string
+    sql: "온라인 아르바이트.모집.여가 시간에 수수료를 벌어 가정에 보조할 수 있으며.매일 8~13만 원을 벌 수 있습니다.Line:vy3bo" ;;
+  }
+
   # ----- Sets of fields for drilling ------
   set: detail {
     fields: [
-	id,
-	first_name,
-	last_name,
-	events.count,
-	orders.count,
-	saralooker.count,
-	sindhu.count,
-	user_data.count
-	]
+  id,
+  first_name,
+  last_name,
+  events.count,
+  orders.count,
+  saralooker.count,
+  sindhu.count,
+  user_data.count
+  ]
   }
 
 }
