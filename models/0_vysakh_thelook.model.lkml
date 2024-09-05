@@ -135,13 +135,77 @@ explore: inventory_items {
 explore: map_layer {}
 
 explore: orders {
-  sql_always_having: ${count}>35;;
   join: users {
     type: left_outer
     sql_on: ${orders.user_id} = ${users.id} ;;
     relationship: many_to_one
   }
 }
+
+explore: +orders {
+  aggregate_table: splitted_orders_by_date {
+    query: {
+      dimensions: [users.created_date, users.first_name, users.state]
+      measures: [sum_ID, sum_ID_ka_ma_ka, users.average_age, users.count, users.total_age]
+      timezone: "Asia/Kolkata"
+    }
+    materialization: {
+      persist_for: "2 hours"
+    }
+
+    # Please specify a datagroup_trigger or sql_trigger_value
+    # See https://cloud.google.com/looker/docs/r/lookml/types/aggregate_table/materialization
+  }
+}
+
+explore: +orders {
+  aggregate_table: splitted_orders_by_month {
+    query: {
+      dimensions: [users.created_month, users.first_name, users.state]
+      measures: [sum_ID, sum_ID_ka_ma_ka, users.average_age, users.count, users.total_age]
+      timezone: "Asia/Kolkata"
+    }
+    materialization: {
+      persist_for: "2 hours"
+    }
+
+    # Please specify a datagroup_trigger or sql_trigger_value
+    # See https://cloud.google.com/looker/docs/r/lookml/types/aggregate_table/materialization
+  }
+}
+
+explore: +orders {
+  aggregate_table: splitted_orders_by_week {
+    query: {
+      dimensions: [users.created_week, users.first_name, users.state]
+      measures: [sum_ID, sum_ID_ka_ma_ka, users.average_age, users.count, users.total_age]
+      timezone: "Asia/Kolkata"
+    }
+    materialization: {
+      persist_for: "2 hours"
+    }
+
+    # Please specify a datagroup_trigger or sql_trigger_value
+    # See https://cloud.google.com/looker/docs/r/lookml/types/aggregate_table/materialization
+  }
+}
+
+explore: +orders {
+  aggregate_table: splitted_orders_by_year {
+    query: {
+      dimensions: [users.created_year, users.first_name, users.state]
+      measures: [sum_ID, sum_ID_ka_ma_ka, users.average_age, users.count, users.total_age]
+      timezone: "Asia/Kolkata"
+    }
+    materialization: {
+      persist_for: "2 hours"
+    }
+
+    # Please specify a datagroup_trigger or sql_trigger_value
+    # See https://cloud.google.com/looker/docs/r/lookml/types/aggregate_table/materialization
+  }
+}
+
 
 explore: order_items {
   join: orders {

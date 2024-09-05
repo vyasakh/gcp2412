@@ -92,6 +92,27 @@ view: orders {
     type: string
 
     sql: ${TABLE}.status ;;
+    order_by_field: status_order
+    html:
+    {% if value == 'COMPLETED' %}
+    <span style="color: #a0db8e; font-size:111%; text-align:center"> <b> {{ rendered_value }} </b> </span>
+    {% elsif value == 'PENDING' %}
+    <span style="color: #E2DF78; font-size:111%; text-align:center"> <b> {{ rendered_value }} </b> </span>
+    {% elsif value == 'CANCELLED' %}
+    <span style="color: #EB9474;font-size:111%; text-align:center"> <b> {{ rendered_value }} </b> </span>
+    {% else %}
+    <span style="color: #ff0000; font-size:111%; text-align:center"> <b> {{ rendered_value }} </b> </span>
+    {% endif %} ;;
+  }
+
+
+  dimension: status_order {
+    type: number
+    sql:CASE WHEN ${TABLE}.status = "CANCELLED" then 1
+            WHEN ${TABLE}.status="PENDING" then 2
+            WHEN ${TABLE}.status="COMPLETED" then 3
+            ELSE 4
+            END;;
   }
 
   dimension: alerts_dim{
@@ -134,6 +155,17 @@ view: orders {
     type: count
 
     drill_fields: [detail*]
+  }
+  measure: sum_ID {
+    type: sum
+    sql: ${id};;
+    value_format_name: gbp_0
+  }
+  measure: sum_ID_ka_ma_ka{
+    type: number
+    sql: ((1.0* ${sum_ID}) / 1000.0);;
+    value_format_name: percent_1
+
   }
 
   # ----- Sets of fields for drilling ------
