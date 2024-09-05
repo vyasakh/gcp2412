@@ -161,7 +161,7 @@ view: orders {
     sql: ${id};;
     value_format_name: gbp_0
   }
-  measure: sum_ID_ka_ma_ka{
+  measure: sum_ID_kmk{
     type: number
     sql: ((1.0* ${sum_ID}) / 1000.0);;
     value_format_name: percent_1

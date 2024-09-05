@@ -146,7 +146,7 @@ explore: +orders {
   aggregate_table: splitted_orders_by_date {
     query: {
       dimensions: [users.created_date, users.first_name, users.state]
-      measures: [sum_ID, sum_ID_ka_ma_ka, users.average_age, users.count, users.total_age]
+      measures: [sum_ID, sum_ID_kmk, users.average_age, users.count, users.total_age]
       timezone: "Asia/Kolkata"
     }
     materialization: {
@@ -162,7 +162,7 @@ explore: +orders {
   aggregate_table: splitted_orders_by_month {
     query: {
       dimensions: [users.created_month, users.first_name, users.state]
-      measures: [sum_ID, sum_ID_ka_ma_ka, users.average_age, users.count, users.total_age]
+      measures: [sum_ID, sum_ID_kmk, users.average_age, users.count, users.total_age]
       timezone: "Asia/Kolkata"
     }
     materialization: {
@@ -178,7 +178,7 @@ explore: +orders {
   aggregate_table: splitted_orders_by_week {
     query: {
       dimensions: [users.created_week, users.first_name, users.state]
-      measures: [sum_ID, sum_ID_ka_ma_ka, users.average_age, users.count, users.total_age]
+      measures: [sum_ID, sum_ID_kmk, users.average_age, users.count, users.total_age]
       timezone: "Asia/Kolkata"
     }
     materialization: {
@@ -194,7 +194,7 @@ explore: +orders {
   aggregate_table: splitted_orders_by_year {
     query: {
       dimensions: [users.created_year, users.first_name, users.state]
-      measures: [sum_ID, sum_ID_ka_ma_ka, users.average_age, users.count, users.total_age]
+      measures: [sum_ID, sum_ID_kmk, users.average_age, users.count, users.total_age]
       timezone: "Asia/Kolkata"
     }
     materialization: {
