@@ -4,8 +4,8 @@ connection: "thelook"
 # include all the views
 include: "/views/**/*.view.lkml"
 
-# Datagroups define a caching policy for an Explore. To learn more,
-# use the Quick Help panel on the right to see documentation.
+
+
 
 datagroup: 0_vysakh_thelook_default_datagroup {
   # sql_trigger: SELECT MAX(id) FROM etl_log;;
@@ -13,7 +13,15 @@ datagroup: 0_vysakh_thelook_default_datagroup {
   max_cache_age: "1 hour"
 }
 
-persist_with: 0_vysakh_thelook_default_datagroup
+# datagroup: 0_vysakh_thelook_default_datagroup {
+#   # sql_trigger: SELECT MAX(id) FROM etl_log;;
+#   max_cache_age: "1 hour"
+# }
+
+
+# persist_with: 0_vysakh_thelook_default_datagroup
+
+persist_for: "0 seconds"
 
 # Explores allow you to join together different views (database tables) based on the
 # relationships between fields. By joining a view into an Explore, you make those
@@ -48,9 +56,18 @@ explore: day_of_week {}
 
 explore: dept {}
 
+explore: add_a_unique_name_1723701937 {}
+
 explore: dummy {}
 
 explore: employees {}
+
+
+explore: sql_runner_query {}
+
+explore: sql_runner1 {}
+
+
 
 explore: events {
   join: users {
@@ -131,6 +148,71 @@ explore: orders {
     relationship: many_to_one
   }
 }
+
+explore: +orders {
+  aggregate_table: splitted_orders_by_date {
+    query: {
+      dimensions: [users.created_date, users.first_name, users.state]
+      measures: [sum_ID, sum_ID_kmk, users.average_age, users.count, users.total_age]
+      timezone: "Asia/Kolkata"
+    }
+    materialization: {
+      persist_for: "2 hours"
+    }
+
+    # Please specify a datagroup_trigger or sql_trigger_value
+    # See https://cloud.google.com/looker/docs/r/lookml/types/aggregate_table/materialization
+  }
+}
+
+explore: +orders {
+  aggregate_table: splitted_orders_by_month {
+    query: {
+      dimensions: [users.created_month, users.first_name, users.state]
+      measures: [sum_ID, sum_ID_kmk, users.average_age, users.count, users.total_age]
+      timezone: "Asia/Kolkata"
+    }
+    materialization: {
+      persist_for: "2 hours"
+    }
+
+    # Please specify a datagroup_trigger or sql_trigger_value
+    # See https://cloud.google.com/looker/docs/r/lookml/types/aggregate_table/materialization
+  }
+}
+
+explore: +orders {
+  aggregate_table: splitted_orders_by_week {
+    query: {
+      dimensions: [users.created_week, users.first_name, users.state]
+      measures: [sum_ID, sum_ID_kmk, users.average_age, users.count, users.total_age]
+      timezone: "Asia/Kolkata"
+    }
+    materialization: {
+      persist_for: "2 hours"
+    }
+
+    # Please specify a datagroup_trigger or sql_trigger_value
+    # See https://cloud.google.com/looker/docs/r/lookml/types/aggregate_table/materialization
+  }
+}
+
+explore: +orders {
+  aggregate_table: splitted_orders_by_year {
+    query: {
+      dimensions: [users.created_year, users.first_name, users.state]
+      measures: [sum_ID, sum_ID_kmk, users.average_age, users.count, users.total_age]
+      timezone: "Asia/Kolkata"
+    }
+    materialization: {
+      persist_for: "2 hours"
+    }
+
+    # Please specify a datagroup_trigger or sql_trigger_value
+    # See https://cloud.google.com/looker/docs/r/lookml/types/aggregate_table/materialization
+  }
+}
+
 
 explore: order_items {
   join: orders {

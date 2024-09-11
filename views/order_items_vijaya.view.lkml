@@ -42,6 +42,11 @@ view: order_items_vijaya {
     sql: ${TABLE}.sale_price ;;
   }
 
+  measure: test {
+    type: number
+    sql: 0 ;;
+  }
+
   # A measure is a field that uses a SQL aggregate function. Here are defined sum and average
   # measures for this dimension, but you can also add measures of many different aggregates.
   # Click on the type parameter to see all the options in the Quick Help panel on the right.
