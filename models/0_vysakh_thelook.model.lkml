@@ -124,6 +124,31 @@ explore: inventory_items {
 explore: map_layer {}
 
 explore: orders {
+
+sql_always_where:
+  {% if orders.order_granularity._is_filtered %}
+    {% if orders.order_granularity._parameter_value == 'Date_and_Source' %}
+      UPPER(${users.city}) = "NEW YORK"
+    {% else %}
+      1=1
+  {% endif %}
+
+{% else %}
+
+1=1
+{% endif %}
+  ;;
+
+
+
+  # sql_always_where:
+  # {% if order_granularity._parameter_value == "Date_Only" %}
+  #       1=1
+  # {% else %}
+  #       UPPER(${users.city}) = "NEW YORK"
+  # {% endif %}
+  # ;;
+
   join: users {
     type: left_outer
     sql_on: ${orders.user_id} = ${users.id} ;;
@@ -132,9 +157,12 @@ explore: orders {
 }
 
 explore: order_items {
+
+
   join: orders {
     type: left_outer
-    sql_on: ${order_items.order_id} = ${orders.id} ;;
+    sql_on: ${order_items.order_id} = ${orders.id} and ${order_items.returned_date}= ${orders.created_date};;
+    fields: [orders.created_date, orders.status]
     relationship: many_to_one
   }
 
