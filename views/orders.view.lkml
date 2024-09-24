@@ -45,6 +45,27 @@ view: orders {
     }
   }
 
+  parameter: num_check {
+    type: number
+    default_value: "100"
+
+  }
+
+  dimension: status_check {
+    type: string
+    sql:
+    {% assign click_thru_attribution__numeric = num_check._parameter_value | plus: 0 %}
+    {% if click_thru_attribution__numeric >= 100 %}
+          1
+          {% elsif click_thru_attribution__numeric > 0 %}
+          {{click_thru_attribution__numeric}}/100.0
+          {% else %}
+          0
+          {% endif %}
+          ;;
+  }
+
+
   dimension: dynamic_date{
       label_from_parameter: dynamic_date_selector
       type: string
