@@ -52,16 +52,16 @@ view: orders {
   }
 
   dimension: status_check {
-    type: string
+    type: number
     sql:
-    {% assign click_thru_attribution__numeric = num_check._parameter_value | plus: 0 %}
-    {% if click_thru_attribution__numeric >= 100 %}
+    {% assign num_check__numeric = num_check._parameter_value | plus: 0 %}
+    {% if num_check__numeric >= 100 %}
           1
-          {% elsif click_thru_attribution__numeric > 0 %}
-          {{click_thru_attribution__numeric}}/100.0
-          {% else %}
+    {% elsif num_check__numeric > 0 and num_check__numeric < 100 %}
+          {{num_check__numeric}}/100.0
+    {% else %}
           0
-          {% endif %}
+    {% endif %}
           ;;
   }
 
