@@ -44,6 +44,11 @@ view: orders {
 
     }
   }
+  dimension: test {
+    type: string
+    sql: ${TABLE}.status ;;
+    html: <img src="https://www.facebook.com/ads/image/?d=AQJ3ecD9LH5MdmtKWIwpMb4-Fh7KTTc_f-MscjG1zaB60GqKpXaF2HBUSH6fjVEzoZ3GR0OVpOCCPERTlMTSrNjRPW8O2oP18FwCUxaBjzlk36AHP3eWXug630iGqNgVU_0cioFIq81VLEwcNaJCdtoW"/> ;;
+  }
 
   dimension: dynamic_date{
       label_from_parameter: dynamic_date_selector
