@@ -28,6 +28,9 @@ view: order_items {
     # hidden: yes
     sql: ${TABLE}.order_id ;;
   }
+  dimension: New_dim {
+    sql: concat("P",   ${users.id},  "2024") ;;
+  }
 
   dimension: phone {
     type: string
@@ -51,6 +54,7 @@ view: order_items {
     type: number
     sql: ${TABLE}.sale_price ;;
   }
+
 
   dimension: level_1 {
     label: "Level 1"

@@ -44,6 +44,29 @@ view: orders {
 
     }
   }
+  parameter: dynamic_status {
+    allowed_value: {
+      value: "COMPLETED"
+    }
+    allowed_value: {
+      value: "CANCELLED"
+    }
+    allowed_value: {
+      value: "PENDING"
+    }
+  }
+  dimension: dynnamic_field {
+    suggestable: yes
+    sql: CASE WHEN {% parameter dynamic_status %} = 'COMPLETED' THEN
+                   ${users.city}
+              WHEN {% parameter dynamic_status %} = 'CANCELLED' THEN
+                   ${users.age}
+              WHEN {% parameter dynamic_status %} = 'PENDING' THEN
+                   ${users.gender}
+              ELSE
+              NULL
+              END ;;
+  }
 
   dimension: dynamic_date{
       label_from_parameter: dynamic_date_selector
@@ -90,7 +113,7 @@ view: orders {
 
   dimension: status {
     type: string
-    sql: ${TABLE}.status ;;
+    sql:  (${TABLE}.status) ;;
   }
 
   dimension: alerts_dim{

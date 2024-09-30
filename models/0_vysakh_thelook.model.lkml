@@ -22,6 +22,7 @@ persist_with: 0_vysakh_thelook_default_datagroup
 # To see the Explore you’re building, navigate to the Explore menu and select an Explore under "0 Vysakh Thelook"
 
 explore: billion_orders {
+  persist_for: "30 minutes"
   join: orders {
     type: left_outer
     sql_on: ${billion_orders.order_id} = ${orders.id} ;;
