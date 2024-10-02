@@ -43,8 +43,44 @@ view: order_items {
 
   dimension_group: returned {
     type: time
-    timeframes: [raw, time, date, week, month, quarter, year]
+    timeframes: [raw, time, date, week, week_of_year, month, quarter, year,month_name]
     sql: ${TABLE}.returned_at ;;
+    #html: {{ rendered_value | date: "%Y-%d-%m"}} ;;
+  }
+
+  dimension: type_date_month {
+    type: date_month
+    description: "NOT WORKING!!!"
+    sql: ${TABLE}.returned_at  ;;
+    html: {{ rendered_value | date: "%^b-%Y"}} ;;
+  }
+
+  dimension: type_date {
+    type: date
+    description: "NOT WORKING!!!"
+    sql: ${TABLE}.returned_at  ;;
+    html: {{ rendered_value | date: "%^b-%Y"}} ;;
+  }
+
+  dimension: type_date_month_name {
+    type: date_month_name
+    description: "Working"
+    sql: ${TABLE}.returned_at  ;;
+    html: {{ rendered_value | date: "%^b-%Y"}} ;;
+
+  }
+  dimension: type_string {
+    type: string
+    description: "Working"
+    sql: ${TABLE}.returned_at  ;;
+    html: {{ rendered_value | date: "%^b-%Y"}} ;;
+  }
+
+  dimension: type_date_time {
+    type: date_time
+    description: "WORKING!!!"
+    sql: ${TABLE}.returned_at  ;;
+    html: {{ rendered_value | date: "%^b-%Y"}} ;;
   }
 
 

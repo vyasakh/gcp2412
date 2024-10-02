@@ -44,6 +44,32 @@ view: orders {
 
     }
   }
+  dimension: test {
+    type: string
+    sql: ${TABLE}.status ;;
+    html: <img src="https://www.facebook.com/ads/image/?d=AQJ3ecD9LH5MdmtKWIwpMb4-Fh7KTTc_f-MscjG1zaB60GqKpXaF2HBUSH6fjVEzoZ3GR0OVpOCCPERTlMTSrNjRPW8O2oP18FwCUxaBjzlk36AHP3eWXug630iGqNgVU_0cioFIq81VLEwcNaJCdtoW"/> ;;
+  }
+
+  parameter: num_check {
+    type: number
+    default_value: "100"
+
+  }
+
+  dimension: status_check {
+    type: number
+    sql:
+    {% assign num_check__numeric = num_check._parameter_value | plus: 0 %}
+    {% if num_check__numeric >= 100 %}
+          1
+    {% elsif num_check__numeric > 0 and num_check__numeric < 100 %}
+          {{num_check__numeric}}/100.0
+    {% else %}
+          0
+    {% endif %}
+          ;;
+  }
+
 
   dimension: dynamic_date{
       label_from_parameter: dynamic_date_selector
@@ -92,14 +118,35 @@ view: orders {
     type: string
 
     sql: ${TABLE}.status ;;
+    order_by_field: status_order
+    html:
+    {% if value == 'COMPLETED' %}
+    <span style="color: #a0db8e; font-size:111%; text-align:center"> <b> {{ rendered_value }} </b> </span>
+    {% elsif value == 'PENDING' %}
+    <span style="color: #E2DF78; font-size:111%; text-align:center"> <b> {{ rendered_value }} </b> </span>
+    {% elsif value == 'CANCELLED' %}
+    <span style="color: #EB9474;font-size:111%; text-align:center"> <b> {{ rendered_value }} </b> </span>
+    {% else %}
+    <span style="color: #ff0000; font-size:111%; text-align:center"> <b> {{ rendered_value }} </b> </span>
+    {% endif %} ;;
+  }
+
+
+  dimension: status_order {
+    type: number
+    sql:CASE WHEN ${TABLE}.status = "CANCELLED" then 1
+            WHEN ${TABLE}.status="PENDING" then 2
+            WHEN ${TABLE}.status="COMPLETED" then 3
+            ELSE 4
+            END;;
   }
 
   dimension: alerts_dim{
-    label: "Alerts Dimension"
+    label:  "The \"official\" metric"
     # drill_fields: [distributor_site_cd,inv_item_sku_id,secondary_sales_current_no_html,secondary_sales_previous_parameter]
     sql:
-          {% if alerts_parameter._parameter_value == 'PENDING' %}
-          (${status})
+          {% if alerts_parameter._parameter_value == '"PENDING"' %}
+          ("${status}")
           {% elsif alerts_parameter._parameter_value == 'COMPLETED' %}
           (${status})
           {% else %}
@@ -134,6 +181,17 @@ view: orders {
     type: count
 
     drill_fields: [detail*]
+  }
+  measure: sum_ID {
+    type: sum
+    sql: ${id};;
+    value_format_name: gbp_0
+  }
+  measure: sum_ID_kmk{
+    type: number
+    sql: ((1.0* ${sum_ID}) / 1000.0);;
+    value_format_name: percent_1
+
   }
 
   # ----- Sets of fields for drilling ------
