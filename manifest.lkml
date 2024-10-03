@@ -20,6 +20,11 @@ visualization: {
   label: "Collapsible"
   file: "visualization/Collapsible.js"
 }
+visualization: {
+  id: "liquid_fill_gauge_(2)"
+  label: "liquid_fill_gauge_(2)"
+  file: "visualization/Collapsible.js"
+}
 
 visualization: {
   id: "spider-marketplace-dev"
