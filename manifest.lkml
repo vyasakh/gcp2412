@@ -15,7 +15,11 @@ constant: bold_detailed {
   {{rendered_value}}
   {% endif %}"
 }
-
+visualization: {
+  id: "liquid_fill_gauge_(2)"
+  label: "liquid_fill_gauge_(2)"
+  file: "visualization/liquid_fill_gauge_(2).js"
+}
 
 visualization: {
   id: "spider-marketplace-dev"
