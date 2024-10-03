@@ -16,9 +16,9 @@ constant: bold_detailed {
   {% endif %}"
 }
 visualization: {
-  id: "liquid_fill_gauge_(2)"
-  label: "liquid_fill_gauge_(2)"
-  file: "visualization/liquid_fill_gauge_(2).js"
+  id: "Collapsible"
+  label: "Collapsible"
+  file: "visualization/Collapsible.js"
 }
 
 visualization: {
